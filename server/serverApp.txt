@@ -1,0 +1,19 @@
+<script>
+    var log = function(title,text) {
+        var url = 'http://localhost:3000/anywhere';
+        const body={title,text}
+        var request = new XMLHttpRequest();
+        function callOtherDomain(){
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        tequest.setRequestHeader('X-PINGOTHER', 'pingpong');
+        request.setRequestHeader('x-auth', eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzZmNTU3ZGQ5N2YyZDJkYzg0NTk1ZDMiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTUwODAxMjEzfQ.GfHeq6CeatapwlMEumnvHHetTOWzH3dRUCmn71cebKg);
+            request.onreadystatechange =function(){
+                if(this.readyState===XMLHttpRequest.DONE&&this.status===200){
+                  alert (succeed)
+                }
+            }
+            request.send(JSON.stringify(body))
+        }
+    }
+</script>

@@ -1,0 +1,12 @@
+{
+  "test" :{
+    "PORT": 3000,
+    "MONGODB_URI":"mongodb://itai:itai30@ds337985.mlab.com:37985/logapp",
+    "JWT_SECRET": "rivnrivnirvnrvnorsvkpd3"
+  },
+  "development":{
+    "PORT": 3000,
+    "MONGODB_URI":"mongodb://itai:itai30@ds337985.mlab.com:37985/logapp",
+    "JWT_SECRET": "edpvnrpnrbnotbjsrpjbirge4"
+  }
+}

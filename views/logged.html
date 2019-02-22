@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>logged</title>
+        <script></script>
+    </head>
+    <body>
+        <script src="/js/libs/jquery-3.1.0.min.js"></script>
+        <button id="download">Download!</button>
+        <button id ='logs'>show logs</button>
+        <button id='logout'>log out</button>
+        <div id="logList"></div>
+        <script>
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const token= urlParams.get('token')
+
+            var showLogs = document.getElementById('logs');
+            showLogs.onclick = function(event) {
+                event.preventDefault();
+                var request = new XMLHttpRequest();
+                request.open('POST', '/logged.html', true);
+                request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+                request.setRequestHeader('x-auth', token)
+                request.onreadystatechange =function(){
+                if(this.readyState===XMLHttpRequest.DONE){
+                    if(this.status===200){
+                    var data = request.response
+                    // console.log(data)
+                    var user= JSON.parse(data)
+                    // console.log(movies)
+                    var ol = jQuery('<ol></ol>');
+                    user.logs.forEach(function (log) {
+                        ol.append(jQuery('<li></li>').text(`{${user.username},${user.password},${log.title},${log.text}}`));
+                    });
+
+                    jQuery('#logList').html(ol);
+                    }else{
+                    var view = request.responseText;
+                    alert (view)
+                    }
+                }
+                }
+                request.send()
+            }
+
+            var logout = document.getElementById('logout');
+            logout.onclick = function(event) {
+              event.preventDefault();
+              var request = new XMLHttpRequest();
+              request.open('DELETE', '/logged.html', true);
+              request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+              request.setRequestHeader('x-auth', token)
+              request.onreadystatechange = function(){
+                if(this.readyState===XMLHttpRequest.DONE&&this.status===200){
+                  var view = request.responseText;
+                  alert (view)
+                  if (view==='remove token'){
+                    window.location.href = "/"
+                  }
+                }
+              }
+              request.send()
+            }
+
+            var download = document.getElementById('download');
+            download.onclick = function(event) {
+                event.preventDefault();
+                window.open('serverApp');
+            }
+              
+            //   var request = new XMLHttpRequest();
+            //   request.open('GET', '/serverApp.txt', true);
+            //   request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+            //   alert(token);
+            //   request.setRequestHeader('x-auth', token)
+            //   request.onreadystatechange = function(){
+            //     if(this.readyState===XMLHttpRequest.DONE&&this.status===200){
+            //       var view = request.responseText;
+            //         window.location.href = "/logged.html"
+            //       }
+            //   }
+            //   request.send()
+            // }
+           
+                // console.log(formData);
+                // console.log(document.getElementById("name1").value)
+
+        
+        </script>
+    </body>
+</html>

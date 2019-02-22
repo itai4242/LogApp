@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Join | ChatApp</title>
+  </head>
+  <body>
+    <form id="test-form">
+      <label>username</label><input type="text" id="username" />
+      <label>password</label><input type="text" id="password" />
+      <label>repeate password</label> <input type="text" id="password2" />
+      <input type="submit" />
+    </form>
+    <script>
+    var testForm = document.getElementById('test-form');
+    testForm.onsubmit = function(event) {
+      event.preventDefault();
+
+      var request = new XMLHttpRequest();
+      // POST to httpbin which returns the POST data as JSON
+      request.open('POST', '/sign.html', true);
+      request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+      // var formData = new FormData(document.getElementById('test-form'));
+        var username = document.getElementById("username").value
+        var password = document.getElementById("password").value
+        var password2 = document.getElementById("password2").value
+        // var params = `name=${name}&genre=${genre}&year=${year}`;
+        body={username,password,password2}
+        // console.log(JSON.stringify(body))
+      // request.send(params);
+      request.onreadystatechange = function(){
+        if(this.readyState===XMLHttpRequest.DONE&&this.status===200){
+          var view = request.responseText;
+          // var str = JSON.parse(view);
+          alert (view)
+          if (view==='signed successfully'){
+            window.location.href = "/"
+          }
+        }
+      }
+      request.send(JSON.stringify(body))
+    }
+    </script>
+  </body>
+</html>
