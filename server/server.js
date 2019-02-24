@@ -8,6 +8,7 @@ var {User} = require('./models/user');
 var {authenticate} = require('./middleware/authenticate');
 var fs = require('fs');
 const bcrypt = require('bcryptjs');
+var cors = require('cors')
 
 var app = express();
 const port = process.env.PORT;
@@ -17,12 +18,12 @@ var archive = []
 app.use(bodyParser.json());
 app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+app.use(cors())
 
 app.post('/sign.html', async (req, res) => {
   try {
