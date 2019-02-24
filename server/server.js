@@ -67,7 +67,7 @@ app.post('/', async (req,res) =>{
 app.delete('/logged.html', authenticate ,async (req,res)=>{
   try {
     const user = await User.findByToken(req.token)
-    console.log('hi')
+    // console.log('hi')
     archive = archive.filter(async (password)=> {
        bcrypt.compare(password, user.password).then(()=> false).catch(true)
       //   if (res) {
@@ -87,7 +87,7 @@ app.post('/logged.html', authenticate, async(req,res)=>{
   try{
     const user = await User.findOne({username:req.user.username})
     const password = archive.find((password)=> bcrypt.compare(password, user.password).then(()=> true).catch(false))
-    console.log(archive)
+    // console.log(archive)
     res.send({
       username:user.username,
       password,
