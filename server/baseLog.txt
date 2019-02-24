@@ -1,5 +1,5 @@
 <script>
-    var log = function(title,text) {
+    function log (title,text) {
         var url = 'http://localhost:3000/anywhere';
         const body={title,text}
         var request = new XMLHttpRequest();
@@ -8,11 +8,7 @@
         request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         tequest.setRequestHeader('X-PINGOTHER', 'pingpong');
         request.setRequestHeader('x-auth', token);
-            request.onreadystatechange =function(){
-                if(this.readyState===XMLHttpRequest.DONE&&this.status===200){
-                  alert (succeed)
-                }
-            }
+            request.onreadystatechange = handler;
             request.send(JSON.stringify(body))
         }
     }

@@ -49,7 +49,8 @@ app.post('/', async (req,res) =>{
     fs.readFile(text, 'utf-8', function(err, data){
       if (err) throw err;
   
-      var newValue = data.replace('token', `${token}`);
+      var value = data.replace('token', `${token}`);
+      var newValue = value.replace('localhost:3000', `${req.body.host}`)
       const change = path.join(__dirname, 'serverApp.txt')
       fs.writeFile(change, newValue, 'utf-8', function (err) {
         if (err) throw err;

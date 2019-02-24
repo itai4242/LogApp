@@ -28,7 +28,8 @@
               request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
                 var username = document.getElementById("name").value
                 var password = document.getElementById("pass").value
-                body={username,password}
+                var host = window.location.host
+                body={username,password, host}
               request.onreadystatechange = function(){
                 if(this.readyState===XMLHttpRequest.DONE&&this.status===200){
                   var view = request.responseText;
