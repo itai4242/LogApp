@@ -18,6 +18,12 @@ app.use(bodyParser.json());
 app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.post('/sign.html', async (req, res) => {
   try {
     if (req.body.password!==req.body.password2){
