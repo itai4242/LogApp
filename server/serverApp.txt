@@ -5,8 +5,12 @@
         var request = new XMLHttpRequest();
         request.open('POST', url, true);
         request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-        request.setRequestHeader('x-auth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzcyN2Y2NTExNjhjMDUzNDBjODI2OWIiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTUxMDA3NTkzfQ.5sxKSaQ2bVIQ0hRN-djD5v3hNxbRdSuI-dFLd-1VQz4');
-            request.onreadystatechange = handler;
+        request.setRequestHeader('x-auth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzcyOTM4ZDNjMGM5YjQxOTgwODE1OTMiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTUxMDEyNzU3fQ.KQSC2I-C3Mmz2iP7_PCuDZszAOBXwRJUF3ev_mO8idA');
+            request.onreadystatechange = function(){
+                if(this.readyState===XMLHttpRequest.DONE&&this.status===200){
+                    alert('success')
+                }
+            };
             request.send(JSON.stringify(body))
     }
 </script>

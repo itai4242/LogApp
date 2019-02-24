@@ -25,6 +25,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // });
 app.use(cors())
 
+// app.get('/logged.html', async(req, res)=>{
+//   res.header(x-auth)
+// })
+
 app.post('/sign.html', async (req, res) => {
   try {
     if (req.body.password!==req.body.password2){
@@ -48,7 +52,12 @@ app.post('/', async (req,res) =>{
   try {
     // const body = _.pick(req.body, ['email', 'password']);
     const user = await User.findByCredentials(req.body.username, req.body.password)
-    const token = await user.generateAuthToken()
+    var token
+    if (user.tokens.length>0){
+      token = user.tokens[0].token; 
+    } else{
+      token = await user.generateAuthToken();
+    } 
     archive.push(req.body.password);
  
     // res.header('x-auth', token).send('logged in');
@@ -77,7 +86,7 @@ app.delete('/logged.html', authenticate ,async (req,res)=>{
     const user = await User.findByToken(req.token)
     // console.log('hi')
     archive = archive.filter(async (password)=> {
-       bcrypt.compare(password, user.password).then(()=> false).catch(true)
+       bcrypt.compare(password, user.password).then(()=> false).catch(()=>true)
       //   if (res) {
       //     return false;
       //   } else {
@@ -85,8 +94,8 @@ app.delete('/logged.html', authenticate ,async (req,res)=>{
       //   }
       // });
     })
-    await req.user.removeToken(req.token)
-    res.send('remove token');
+    // await req.user.removeToken(req.token)
+    res.send('log out');
   } catch (e) {
     res.send('something went wrong');
   }
@@ -94,7 +103,7 @@ app.delete('/logged.html', authenticate ,async (req,res)=>{
 app.post('/logged.html', authenticate, async(req,res)=>{
   try{
     const user = await User.findOne({username:req.user.username})
-    const password = archive.find((password)=> bcrypt.compare(password, user.password).then(()=> true).catch(false))
+    const password = archive.find((password)=> bcrypt.compare(password, user.password).then(()=> true).catch(()=>false))
     // console.log(archive)
     res.send({
       username:user.username,
